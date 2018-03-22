@@ -1,3 +1,6 @@
+FROM alpine as ssl
+RUN apk add --update --no-cache ca-certificates
+
 FROM gcc:6 AS builder
 
 ADD . /code/
@@ -10,3 +13,4 @@ RUN gcc src/zopfli/*.c -O2 -W -Wall -Wextra -Wno-unused-function -ansi -pedantic
 FROM busybox:glibc
 
 COPY --from=builder ["/code/zopfli", "/bin/"]
+COPY --from=ssl /etc/ssl/certs /etc/ssl/certs
