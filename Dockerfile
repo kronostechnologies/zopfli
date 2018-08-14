@@ -14,3 +14,4 @@ FROM busybox:glibc
 
 COPY --from=builder ["/code/zopfli", "/bin/"]
 COPY --from=ssl /etc/ssl/certs /etc/ssl/certs
+RUN mkdir -p /usr/bin && ln -s /bin/sh /usr/bin/sh
